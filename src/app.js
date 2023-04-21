@@ -30,11 +30,11 @@ app.use(express.json());
 app.use(cors());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
-app.use(bodyParser.json({ limit: "30mb", extender: true }));
-app.use(bodyParser.urlencoded({ limit: "30mb", extender: true }));
+app.use(bodyParser.json({ limit: "30mb", extended: true }));
+app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
 // routes
-app.use('/api',router)
+app.use('/api', router)
 // postmiddlewares
 
 // public

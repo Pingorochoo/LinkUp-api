@@ -28,14 +28,16 @@ const UserSchema = new Schema(
             min: 5,
             max: 254,
         },
-        picture: {
+        picturePath: {
             type: String,
             default: ''
         },
-        friends: {
-            type: Array,
-            default: []
-        },
+        friends: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'User'
+            }
+        ],
         location: String,
         occupation: String,
         viewedProfile: Number,
@@ -55,7 +57,6 @@ UserSchema.pre('save', async function (next) {
 UserSchema.methods.isPasswordMatched = async function (password) {
     return await bcrypt.compare(password, this.password)
 }
-
 
 const User = model('User', UserSchema)
 export default User
