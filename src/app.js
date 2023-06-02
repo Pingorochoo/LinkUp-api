@@ -1,47 +1,46 @@
 import express from "express";
 import bodyParser from "body-parser";
-import cors from 'cors';
-import dotenv from 'dotenv';
-import { join, dirname } from 'path';
-import helmet from 'helmet';
+import cors from "cors";
+import dotenv from "dotenv";
+import { join, dirname } from "path";
+import helmet from "helmet";
 import morgan from "morgan";
 import { fileURLToPath } from "url";
-import dbConnect from './config/db_connect.js'
+import dbConnect from "./config/db_connect.js";
 import router from "./routes/index.js";
 
-dbConnect()
+dbConnect();
 dotenv.config();
 
 // initializations
+const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const app = express();
 
 // settings
-app.set('port', process.env.PORT);
-app.set('assets', join(__dirname, 'public/assets'));
+app.set("port", process.env.PORT || 6001);
+app.set("assets", join(__dirname, "public/assets"));
 
 // globals
-app.locals.assets = app.get('assets')
+app.locals.assets = app.get("assets");
 
 //premiddlewares
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 app.use(express.json());
 app.use(cors());
 app.use(helmet());
-app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
 // routes
-app.use('/api', router)
+app.use("/api", router);
+
 // postmiddlewares
+//---
+
 
 // public
-app.use('/assets', express.static(join(__dirname, 'public/assets')));
+app.use("/assets", express.static(join(__dirname, "public/assets")));
 
-
-export default app
-
-
-
+export default app;

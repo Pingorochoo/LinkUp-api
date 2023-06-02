@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import User from '../modules/user.model.js'
+import User from '../models/user.model.js'
 import dotenv from 'dotenv'
 dotenv.config()
 export const register = async (req, res) => {
@@ -14,13 +14,20 @@ export const register = async (req, res) => {
             location,
             occupation
         } = req.body
-
+        console.log(firstName,
+            lastName,
+            email,
+            password,
+            picturePath,
+            friends,
+            location,
+            occupation);
         const newUser = new User({
             firstName,
             lastName,
             email,
             password,
-            picture: picturePath,
+            picturePath,
             friends,
             location,
             occupation,
@@ -91,7 +98,7 @@ export const addRemoveFriend = async (req, res) => {
         }
         await user.save()
         await friend.save()
-        res.status(200).json(user)
+        res.status(200).json(user.friends)
     } catch (error) {
         res.status(404).json({ message: error.message })
     }

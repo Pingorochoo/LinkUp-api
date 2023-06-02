@@ -1,9 +1,10 @@
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
+// import { generateTestData } from '../data'
 dotenv.config()
 mongoose.connection.once('open', () => {
-    console.log('database is connected to ' + process.env.MONGO_URL)
-    //insert test data
+    console.log('database is connected to: ' + process.env.MONGO_URL)
+    // insert test data
     // generateTestData()
     //     .then(() => console.log('data filled'))
     //     .catch((err) => console.log(err))

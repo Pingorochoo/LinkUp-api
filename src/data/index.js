@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import User from "../modules/user.model.js";
-import Post from "../modules/post.model.js";
+import User from "../models/user.model.js";
+import Post from "../models/post.model.js";
 
 const userIds = [
     new mongoose.Types.ObjectId(),
@@ -283,6 +283,7 @@ const posts = [
 ];
 
 export const generateTestData = async () => {
-    // await User.insertMany(users)
-    // await Post.insertMany(posts)
+    await User.insertMany(users)
+    await Post.insertMany(posts)
+    // then go to config/db_connect.js and uncomment this funcion
 }
