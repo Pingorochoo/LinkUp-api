@@ -10,10 +10,10 @@ import {
 const postRouter = Router();
 
 postRouter.get("/", verifyToken, getFeedPost);
-postRouter.get("/:userId/posts", verifyToken, getUserPosts);
+postRouter.get("/:userId", verifyToken, getUserPosts);
 
-postRouter.post("/", verifyToken, createPost);
-// postRouter.post('/', verifyToken, upload.single("picture"),createPost)
-postRouter.post("/:id/like", verifyToken, likePost);
+postRouter.post('/', verifyToken, upload.single("picture"),createPost)
+
+postRouter.patch("/:id/like", verifyToken, likePost);
 
 export default postRouter;

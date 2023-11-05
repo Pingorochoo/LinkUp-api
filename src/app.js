@@ -27,20 +27,21 @@ app.locals.assets = app.get("assets");
 //premiddlewares
 app.use(morgan("dev"));
 app.use(express.json());
-app.use(cors());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
+app.use(cors());
 
 // routes
 app.use("/api", router);
+app.use("/", router);
 
 // postmiddlewares
 //---
 
 
 // public
-app.use("/assets", express.static(join(__dirname, "public/assets")));
+app.use("/assets", express.static(app.get("assets")));
 
 export default app;

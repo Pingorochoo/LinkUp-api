@@ -1,36 +1,38 @@
-import { Schema, model } from 'mongoose'
+import { Schema, model } from "mongoose";
 
 const postSchema = new Schema(
-    {
-        userId: {
-            type: String,
-            required: true
-        },
-        firstName: {
-            type: String,
-            required: true
-        },
-        lastName: {
-            type: String,
-            required: true
-        },
-        location: String,
-        description: String,
-        picturePath: String,
-        userPicturePath: String,
-        likes: {
-            type: Map,
-            of: Boolean,
-        },
-        comments: {
-            type: Array,
-            default: []
-        }
-
+  {
+    userId: {
+      type: String,
+      required: true,
     },
-    {
-        timestamps: true
-    })
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+    },
+    location: String,
+    description: String,
+    picturePath: String,
+    userPicturePath: String,
+    likes: {
+      type: Map,
+      of: Boolean,
+    },
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Comment",
+      },
+    ],
+  },
+  {
+    timestamps: true,
+  }
+);
 
-const Post = model('Post', postSchema)
-export default Post
+const Post = model("Post", postSchema);
+export default Post;

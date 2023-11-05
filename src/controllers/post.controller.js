@@ -47,9 +47,10 @@ export const likePost = async (req, res) => {
   try {
     const { id } = req.params;
     // const { userId } = req.body
-    const { id: userId } = req.user;
+    const { _id: userId } = req.user;
     const post = await Post.findById(id);
     const isLiked = post.likes.get(userId); //userId es la key y este retornará el valor booleano
+    console.log(userId);
     if (isLiked) post.likes.delete(userId);
     else post.likes.set(userId, true);
     await post.save();
