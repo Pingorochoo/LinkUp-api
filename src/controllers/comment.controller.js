@@ -10,8 +10,20 @@ export const createComment = async (req, res) => {
     const post = await Post.findById(postId);
     if (!user) throw { message: "invalid userId" };
     if (!post) throw { message: "invalid postId path variable" };
-    const newComment = new Comment({
+    const {
+      firstName,
+      lastName,
+      location,
+      picturePath: userPicturePath,
+    } = user;
+    const commentUser = {
       userId,
+      name: `${firstName} ${lastName}`,
+      picturePath: userPicturePath,
+      location,
+    };
+    const newComment = new Comment({
+      user: commentUser,
       postId,
       parent,
       comment,
@@ -33,8 +45,16 @@ export const getCommentsByPost = async (req, res) => {
     // metod 1, get the array of coment from a post:
     const { postId } = req.params;
     const { comments } = await Post.findById(postId).populate("comments");
-    const stringComment = comments.map(({ comment }) => comment);
-    res.status(201).json(stringComment);
+    const filtretComments = comments.map(
+      ({ comment, user, likes, picturePath, parent }) => ({
+        comment,
+        user,
+        likes,
+        picturePath,
+        parent,
+      })
+    );
+    res.status(201).json(filtretComments);
     // metod 2 find all coments that match with an specific postId:
   } catch (error) {
     res.status(404).json({ message: error.message });

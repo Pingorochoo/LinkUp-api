@@ -3,10 +3,15 @@ import { nonEmptyStringValidator } from "../utils/validations.js";
 
 const commentSchema = new Schema(
   {
-    userId: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
+    user: {
+      userId: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+      },
+      name: String,
+      picturePath: String,
+      location: String,
     },
     postId: {
       type: Schema.Types.ObjectId,
@@ -26,8 +31,8 @@ const commentSchema = new Schema(
     picturePath: String,
     likes: [
       {
-          type: Schema.Types.ObjectId,
-          ref: "User",
+        type: Schema.Types.ObjectId,
+        ref: "User",
       },
     ],
   },
