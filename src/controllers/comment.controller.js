@@ -46,7 +46,8 @@ export const getCommentsByPost = async (req, res) => {
     const { postId } = req.params;
     const { comments } = await Post.findById(postId).populate("comments");
     const filtretComments = comments.map(
-      ({ comment, user, likes, picturePath, parent }) => ({
+      ({ _id, comment, user, likes, picturePath, parent }) => ({
+        _id,
         comment,
         user,
         likes,
@@ -64,20 +65,19 @@ export const updateComment = async (req, res) => {};
 export const deleteComment = async (req, res) => {};
 export const tooggleLikeDislike = async (req, res) => {
   try {
-    const { userId } = req.body;
-    const { commentId } = req.params;
+    const { commentId, userId } = req.params;
     const user = await User.findById(userId);
     if (!user) throw { message: "invalid userId or user does not exist" };
     const comment = await Comment.findById(commentId);
     if (!comment) throw { message: "invalid commentId or not exist" };
-    console.log(comment.likes);
-    if (comment.likes.includes(userId)) {
+    let isLiked = comment.likes.includes(userId);
+    if (isLiked) {
       comment.likes = comment.likes.filter((id) => userId !== id.toString());
     } else {
       comment.likes.push(userId);
     }
     await comment.save();
-    res.status(201).json(comment.likes);
+    res.status(201).json({ isLiked, likes: comment.likes });
   } catch (error) {
     res.status(404).json({ mnessage: error.message });
   }

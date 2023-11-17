@@ -7,5 +7,5 @@ import {
 const commentRouter = Router();
 commentRouter.post("/:postId", createComment);
 commentRouter.get("/getCommentBypost/:postId", getCommentsByPost);
-commentRouter.patch("/like/:commentId",tooggleLikeDislike);
+commentRouter.patch("/like/:commentId/:userId", tooggleLikeDislike);
 export default commentRouter;
